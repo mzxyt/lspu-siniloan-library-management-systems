@@ -1,0 +1,169 @@
+{%extends 'students/base.html.jinja'%}
+{% block title %}
+Requests
+{% endblock title %}
+
+{% block content %}
+<section class="">
+    <div class="bg-secondary py-4">
+        <div class="container text-white">
+            <div class="row align-items-center">
+                <div class="col-lg-2 col-auto">
+                    <div class="user-photo shadow position-relative" data-img="{{g.student.photo}}">
+                        <button class="btn btn-sm btn-c-light-warning pb-0" type="button" data-bs-toggle="modal"
+                            data-bs-target="#photo-modal">
+                            <i class="bx bx-camera fs-5"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="col">
+                    <h3 class="text-warning">{{account.firstname}} {{account.lastname}}</h3>
+                    <p class="my-1">
+                        <small>
+                            Year Level: {{account.year_level}}
+                        </small>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container pt-4 pb-5">
+        <p class="fs-5 text-secondary fw-bold">Account Profile</p>
+        <hr>
+        <div class="row justify-content-start">
+            <div class="col-md-8">
+                <p class="text-black-50"><small>Update Account</small></p>
+                {% for message in get_flashed_messages(category_filter=["message"]) %}
+                <div class="text-start flash alert alert-success mb-3"><i class="bx bxs-check-circle me-1"></i> {{
+                    message }}
+                </div>
+                {% endfor %}
+                {% for message in get_flashed_messages(category_filter=["error"]) %}
+                <div class="text-start flash alert alert-danger mb-3"><i class="bx bx-info-circle me-1"></i> {{ message
+                    }}
+                </div>
+                {% endfor %}
+                <form id="account-form" action="{{url_for('students.profile')}}" method="post">
+                    <input type="hidden" name="id" id="id-box" value="{{g.student.id}}">
+                    <div class="mb-3">
+                        <label for="" class="form-label">Firstname</label>
+                        <input type="text" disabled value="{{account.firstname}}" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label for="" class="form-label">Middlename</label>
+                        <input type="text" disabled value="{{account.middlename}}" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label for="" class="form-label">Lastname</label>
+                        <input type="text" disabled value="{{account.lastname}}" class="form-control">
+                    </div>
+                    <hr>
+                    <div class="mb-3">
+                        <label for="" class="form-label fw-bold">Email:</label>
+                        <input type="email" placeholder="Add an email" name="email" value="{{account.email}}"
+                            class="form-control">
+                    </div>
+                    <div class="">
+                        <div class="d-flex align-items-end">
+                            <div class="w-100">
+                                <div>
+                                    <label for="" class="form-label fw-bold">Password:</label>
+                                    <input type="password" required disabled id="old-password" value="password"
+                                        class="form-control rounded-1">
+                                </div>
+                            </div>
+                            <div>
+                                <button class="btn btn-c-light-dark rounded-0" id="edit-password" type="button">
+                                    <i class="bx bx-edit"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <span class=" text-danger mt-2 d-none" id="label-incorrect"><small>Incorrect password</small></span>
+
+
+                    <div id="new-password" class="mt-3 d-none">
+                        <label for="" class="form-label fw-bold">New Password</label>
+                        <input type="text" disabled name="new-password" required class="form-control rounded-1 ">
+                    </div>
+                    <div class="mt-4">
+                        <button class="btn btn-c-secondary btn-sm form-btn" type="submit">Reset</button>
+                        <button class="btn btn-success btn-sm ms-lg-2 form-btn" type="submit">Save Changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% include "students/components/profile-modals.html.jinja" %}
+{% endblock content %}
+
+
+{% block scripts %}
+
+<script>
+
+
+    $("#edit-password").on("click", function (e) {
+        if ($("#old-password").attr('disabled')) {
+            $(this).removeClass('btn-c-light-dark').addClass('btn-dark')
+            $("#old-password").siblings('label').html('Old Password')
+            $("#old-password").removeAttr('disabled')
+            $("#new-password").find('input').removeAttr('disabled')
+            $("#old-password").val("")
+            $("#old-password").attr('type', 'text')
+            $("#new-password").removeClass("d-none")
+        } else {
+            $(this).removeClass('btn-dark').addClass('btn-c-light-dark')
+            $("#new-password").addClass("d-none")
+            $("#new-password").find('input').attr('disabled', true)
+            $("#old-password").attr('type', 'password')
+            $("#new-password").attr('type', 'password')
+            $("#old-password").attr('disabled', true)
+            $("#old-password").val("password")
+            $("#old-password").siblings('label').html('Password')
+
+        }
+    })
+    var verified_password = false
+    $("#account-form").on("submit", function (e) {
+        if (!verified_password && !$("#old-password").attr('disabled')) {
+            e.preventDefault()
+            const label = $("#label-incorrect")
+            $(".form-btn").attr('disabled', true)
+
+            let password = $("#old-password").val()
+            let id = $("#id-box").val()
+
+            $.ajax({
+                url: "{{url_for('api.check_student_password')}}",
+                method: "POST",
+                data: { id, password },
+                dataType: 'json',
+                success: function (res) {
+                    if (res.matched) {
+                        verified_password = true;
+                        $("#account-form").trigger('submit')
+                    } else {
+                        $(".form-btn").removeAttr('disabled')
+                        label.removeClass('d-none')
+                    }
+                }
+            })
+        }
+    })
+
+    $(".photo-chooser").on('change', function (e) {
+        let file = e.target.files[0]
+
+        $("#user-photo").css('background-image', `url('${URL.createObjectURL(file)}')`)
+    })
+
+    $(function () {
+        let img = $("#user-photo").data('img')
+        $("#user-photo").css('background-image', `url('${img}')`)
+    })
+</script>
+
+{% endblock scripts %}

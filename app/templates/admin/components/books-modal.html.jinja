@@ -1,0 +1,168 @@
+<!-- add modal -->
+<div class="modal fade modal-lg" id="add-modal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header border-0 ">
+                <h5 class="modal-title fw-bold">Add new book</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="{{url_for('admin.add_book')}}" method="post">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="" class="form-label">ISBN:</label>
+                        <input type="text" name="isbn" required placeholder="ISBN" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label for="" class="form-label">Title:</label>
+                        <input type="text" name="title" required placeholder="Book's title" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label for="" class="form-label">Author:</label>
+                        <select name="author_id" id="" class="form-select">
+                            <option value="">Select One</option>
+                            {%for author in authors%}
+                            <option value="{{author.id}}">{{author.name}}</option>
+                            {%endfor%}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="" class="form-label">Category:</label>
+                        <select name="category_id" id="" class="form-select">
+                            <option value="">Select One</option>
+                            {%for category in categories%}
+                            <option value="{{category.id}}">{{category.name}}</option>
+                            {%endfor%}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="" class="form-label">No. of Copies:</label>
+                        <input type="number" min="1" name="copies" required placeholder="No. of copies"
+                            class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label for="" class="form-label">Date Published:</label>
+                        <input type="date" name="date_published" required class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label for="" class="form-label">Sypnosis:</label>
+                        <textarea class="form-control" rows="6" required name="sypnosis"></textarea>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light btn-sm rounded-1" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-c-primary btn-sm rounded-1">Add book</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- info modal -->
+<div class="modal fade modal-lg" id="info-modal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header border-0 ">
+                <h5 class="modal-title fw-bold">Book Information</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="{{url_for('admin.add_book')}}" method="post">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="" class="form-label">ISBN:</label>
+                        <input type="text" name="isbn" id="info-isbn" required placeholder="ISBN" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label for="" class="form-label">Title:</label>
+                        <input type="text" name="" id="info-title" readonly required class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label for="" class="form-label">Author:</label>
+                        <input type="text" name="" id="info-author" readonly required class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label for="" class="form-label">Category:</label>
+                        <input type="text" name="" id="info-category" readonly required class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label for="" class="form-label">No. of Copies:</label>
+                        <input type="number" min="1" id="info-copies" name="copies" required placeholder="No. of copies"
+                            class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label for="" class="form-label">Date Published:</label>
+                        <input type="text" name="" id="info-date-published" readonly required class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label for="" class="form-label">Sypnosis:</label>
+                        <textarea class="form-control" id="info-sypnosis" rows="8" required name="sypnosis"></textarea>
+                    </div>
+
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+<!-- edit modal -->
+<div class="modal fade modal-lg" id="edit-modal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header border-0 ">
+                <h5 class="modal-title fw-bold">Edit book</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="{{url_for('admin.edit_book')}}" method="post">
+                <div class="modal-body">
+                    <input type="hidden" name="id" id="edit-id-box">
+                    <div class="mb-3">
+                        <label for="" class="form-label">ISBN:</label>
+                        <input type="text" name="isbn" id="edit-isbn" required placeholder="ISBN" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label for="" class="form-label">Title:</label>
+                        <input type="text" name="title" id="edit-title-box" required placeholder="Book's title"
+                            class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label for="" class="form-label">Author:</label>
+                        <select name="author_id" id="edit-author-box" class="form-select">
+                            <option value="" id="edit-author"></option>
+                            {%for author in authors%}
+                            <option value="{{author.id}}">{{author.name}}</option>
+                            {%endfor%}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="" class="form-label">Category:</label>
+                        <select name="category_id" id="" class="form-select">
+                            <option value="" id="edit-category"></option>
+                            {%for category in categories%}
+                            <option value="{{category.id}}">{{category.name}}</option>
+                            {%endfor%}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="" class="form-label">No. of Copies:</label>
+                        <input type="number" min="1" id="edit-copies" name="copies" required placeholder="No. of copies"
+                            class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label for="" class="form-label">Date Published:</label>
+                        <input type="date" name="date_published" id="edit-date-published-box" required
+                            class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label for="" class="form-label">Sypnosis:</label>
+                        <textarea class="form-control" id="edit-sypnosis-box" rows="8" required
+                            name="sypnosis"></textarea>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light btn-sm rounded-1" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-c-primary btn-sm rounded-1">Save book</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

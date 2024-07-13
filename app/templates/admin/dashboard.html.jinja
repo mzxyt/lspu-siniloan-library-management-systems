@@ -1,0 +1,99 @@
+{%extends 'admin/base.html.jinja'%}
+
+{%block title%} Dashboard {%endblock%}
+
+{%block content%}
+<div class="container">
+    <h3>Dashboard</h3>
+    <hr>
+    <div class="">
+        {% for message in get_flashed_messages(category_filter=["message"]) %}
+        <div class="text-start flash alert alert-success mb-3"><i class="bx bxs-check-circle me-1"></i> {{ message }}
+        </div>
+        {% endfor %}
+        {% for message in get_flashed_messages(category_filter=["error"]) %}
+        <div class="text-start flash alert alert-danger mb-3"><i class="bx bx-info-circle me-1"></i> {{ message }}</div>
+        {% endfor %}
+    </div>
+    <div class="row gx-3 gy-2">
+        <div class="col-lg-4">
+            <!-- number of pending requests -->
+            <div class="card dashboard-card border-primary shadow">
+                <div class="card-body pe-4">
+                    <div class="row ">
+                        <div class="col">
+                            <p class="my-1">
+                                Pending Requests
+                            </p>
+                        </div>
+                        <div class="col-1">
+                            <span class="fs-4">{{pending}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- no. of authors -->
+        <div class="col-lg-4">
+            <div class="card dashboard-card border-success shadow">
+                <div class="card-body pe-4">
+                    <div class="row ">
+                        <div class="col">
+                            <p class="my-1">
+                                Books in rental
+                            </p>
+                        </div>
+                        <div class="col-1">
+                            <span class="fs-4">0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="card dashboard-card border-secondary shadow">
+                <div class="card-body  pe-4">
+                    <div class="row ">
+                        <div class="col">
+                            <p class="my-1">
+                                Transactions recorded
+                            </p>
+                        </div>
+                        <div class="col-1">
+                            <span class="fs-4">0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col-lg-6">
+            <div class="card shadow">
+                <div class="card-header bg-white ">
+                    <p class="my-0">
+                        <small>Pending requests</small>
+                    </p>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive-sm">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Book</th>
+                                    <th>Student</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+{%endblock%}

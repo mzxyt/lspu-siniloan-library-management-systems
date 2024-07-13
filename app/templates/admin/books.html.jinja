@@ -1,0 +1,149 @@
+{%extends 'admin/base.html.jinja'%}
+
+{%block title%} Books {%endblock%}
+
+{%block content%}
+<div class="container">
+    <h3>Books</h3>
+    <hr>
+    <div class="">
+
+        {% for message in get_flashed_messages(category_filter=["message"]) %}
+        <div class="text-start flash alert alert-success mb-3"><i class="bx bxs-check-circle me-1"></i> {{ message }}
+        </div>
+        {% endfor %}
+        {% for message in get_flashed_messages(category_filter=["error"]) %}
+        <div class="text-start flash alert alert-danger mb-3"><i class="bx bx-info-circle me-1"></i> {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    <div class="text-end mb-3">
+        <button class="btn btn-sm btn-c-primary" type="button" data-bs-toggle="modal" data-bs-target="#add-modal">
+            Add New
+        </button>
+    </div>
+    <div class="table-responsive-sm">
+        <table class="table" id="table">
+            <thead>
+                <tr>
+                    <th>ISBN</th>
+                    <th>Title</th>
+                    <th>Category</th>
+                    <th>Author</th>
+                    <th>Available Copies</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {%for i in range(0,len)%}
+                <tr>
+                    <td>{{books[i].isbn}}</td>
+                    <td>{{books[i].title}}</td>
+                    <td>{{books[i].category_name}}</td>
+                    <td>{{books[i].author_name}}</td>
+                    <td><span class="text-primary fw-bold">{{books[i].available}}</span> / {{books[i].copies}}</td>
+                    <td>
+                        <div class="dropdown">
+                            <button class="btn btn-light text-primary pb-0 border" type="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                <i class='bx bx-dots-horizontal-rounded fs-4'></i>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item fw-light text-primary-50" data-id="{{books[i].id }}" href="#info-modal" data-bs-toggle="modal"><i class="me-1 bx bx-fullscreen"></i> Information</a></li>
+                                <li><a class="dropdown-item fw-light text-primary-50" data-id="{{books[i].id }}" href="#edit-modal" data-bs-toggle="modal"><i class="me-1 bx bx-edit"></i> Update</a></li>
+                                <li><a class="dropdown-item fw-light text-primary-50 delete" href="#"><i class="me-1 bx bx-trash"></i> Remove</a></li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+                {%endfor%}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{%include 'admin/components/books-modal.html.jinja'%}
+{%endblock%}
+
+{%block scripts%}
+<script>
+    
+    $(function () {
+        $("#table").dataTable()
+
+        $(".form-label").addClass('fw-bold')
+    })
+
+
+
+    $("#edit-modal").on('show.bs.modal', function (e) {
+        let id = $(e.relatedTarget).data('id')
+
+        $.ajax({
+            url: "{{url_for('admin.get_book')}}",
+            method: "post",
+            data: { id },
+            dataType: 'json',
+            success: function (res) {
+                console.log('res: ', res)
+                let date = new Date(res.date_published)
+                console.log('date: ', date)
+                console.log('str date: ', `${date.getFullYear()}-${date.getMonth() < 10? '0'+(1+date.getMonth()):date.getMonth()}-${date.getDate() < 10? '0'+date.getDate():date.getDate()}`)
+                $("#edit-title-box").val(res.title)
+                $("#edit-sypnosis-box").val(res.sypnosis)
+                $("#edit-date-published-box").val(`${date.getFullYear()}-${date.getMonth() < 10? '0'+(1+date.getMonth()):date.getMonth()}-${date.getDate() < 10? '0'+date.getDate():date.getDate()}`)
+                $('#edit-category').val(res.category_id).html(res.category_name)
+                $('#edit-author').val(res.author_id).html(res.author_name)
+                $("#edit-id-box").val(res.id)
+                $("#edit-copies").val(res.copies)
+
+            },
+            error: function (err) {
+                console.log('error: ', err)
+            }
+        })
+    })
+    $("#info-modal").on('show.bs.modal', function (e) {
+        let id = $(e.relatedTarget).data('id')
+
+        $.ajax({
+            url: "{{url_for('admin.get_book')}}",
+            method: "post",
+            data: { id },
+            dataType: 'json',
+            success: function (res) {
+                console.log('res: ', res)
+
+                $("#info-title").val(res.title)
+                $("#info-sypnosis").val(res.sypnosis)
+                $("#info-category").val(res.category_name)
+                $("#info-author").val(res.author_name)
+                $("#info-copies").val(res.copies)
+                $("#info-date-published").val(res.date_published)
+                $('#id-box').val(res.id)
+
+            },
+            error: function (err) {
+                console.log('error: ', err)
+            }
+        })
+    })
+
+    $(".delete").on('click', function (e) {
+        const id = $(this).data('id')
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = `{{url_for('admin.delete_book')}}?id=${id}`
+            }
+        })
+    })
+</script>
+{%endblock%}

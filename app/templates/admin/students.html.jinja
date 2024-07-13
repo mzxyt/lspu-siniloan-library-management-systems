@@ -1,0 +1,125 @@
+{%extends 'admin/base.html.jinja'%}
+
+{%block title%} Students Record {%endblock%}
+
+{%block content%}
+<div class="container">
+    <h3>Students</h3>
+    <hr>
+    <div class="">
+        {% for message in get_flashed_messages(category_filter=["message"]) %}
+        <div class="text-start flash alert alert-success mb-3"><i class="bx bxs-check-circle me-1"></i> {{ message }}
+        </div>
+        {% endfor %}
+        {% for message in get_flashed_messages(category_filter=["error"]) %}
+        <div class="text-start flash alert alert-danger mb-3"><i class="bx bx-info-circle me-1"></i> {{ message }}</div>
+        {% endfor %}
+    </div>
+    <div class="text-end mb-3">
+        <button class="btn btn-sm btn-c-primary" type="button" data-bs-toggle="modal" data-bs-target="#add-modal">
+            Add student
+        </button>
+    </div>
+    <div class=" table-responsive-md table-responsive-sm">
+        <table class="table align-middle" id="table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Photo</th>
+                    <th>Student ID</th>
+                    <th>Name</th>
+                    <th>Gender</th>
+                    <th>Year level</th>
+                    <th>Email Address</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {%for x in range(0,len) %}
+                <tr>
+                    <td>{{x + 1}}</td>
+                    <td>
+                        <div class="user-photo sm shadow-sm border-white border-2 border" data-img="{{students[x].photo}}"></div>
+                    </td>
+                    <td>{{students[x].student_id}}</td>
+                    <td>{{students[x].firstname}} {{students[x].lastname}}</td>
+                    <td>{{students[x].gender}}</td>
+                    <td>{{students[x].year_level}}</td>
+                    <td>{{students[x].email}}</td>
+                    <td>
+                        <button class="btn btn-c-success pt-2 fs-6 edit-student" data-bs-target="#edit-modal"
+                            data-bs-toggle="modal" data-id="{{students[x].id}}">
+                            <i class="bx bx-edit"></i>
+                        </button>
+                        <button class="btn btn-c-danger pt-2 fs-6 delete" data-id="{{students[x].id}}">
+                            <i class="bx bx-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+                {%endfor%}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{%include 'admin/components/students-modal.html.jinja'%}
+{%endblock%}
+
+{%block scripts%}
+<script>
+
+    $(function(){
+        $("#table").dataTable()
+    })
+
+    $('#lastname-box').on('change, keydown, keyup', function (e) {
+        $("#password-box").val($(this).val())
+    })
+    $('#edit-lastname-box').on('change', function (e) {
+        $("#edit-password-box").val($(this).val())
+    })
+
+    $("#edit-modal").on('show.bs.modal', function (e) {
+        let id = $(e.relatedTarget).data('id')
+
+        $.ajax({
+            url: "{{url_for('admin.get_student')}}",
+            method: "post",
+            data: { id },
+            dataType: 'json',
+            success: function (res) {
+                console.log('res: ', res)
+
+                $("#edit-firstname-box").val(res.firstname)
+                $("#edit-middlename-box").val(res.middlename)
+                $("#edit-lastname-box").val(res.lastname)
+                $("#edit-gender").val(res.gender).html(res.gender)
+                $("#edit-year-level-box").val(res.year_level)
+                $("#edit-student-id-box").val(res.student_id)
+                $('#id-box').val(res.id)
+
+            },
+            error: function (err) {
+                console.log('error: ', err)
+            }
+        })
+    })
+
+    $(".delete").on('click', function (e) {
+        const id = $(this).data('id')
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+               window.location.href = `{{url_for('admin.delete_student')}}?id=${id}`
+            }
+        })
+    })
+</script>
+{%endblock%}

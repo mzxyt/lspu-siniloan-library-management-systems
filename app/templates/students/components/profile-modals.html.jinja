@@ -1,0 +1,24 @@
+<!-- edit modal -->
+<div class="modal fade modal bg-primary bg-opacity-10" id="photo-modal" tabindex="-1">
+    <div class="modal-dialog ">
+        <div class="modal-content p-4 rounded-3">
+            <div class="modal-body">
+                <h6 class="text-black-50 mb-5">Change Profile Picture</h6> 
+
+                <div class="mt-2">
+                    <div class="user-photo" id="user-photo" data-img="{{g.student.photo}}"></div>
+                </div>
+                <form action="{{url_for('students.update_photo')}}" enctype="multipart/form-data" method="post" class="mt-2">
+                <input type="hidden" name="id" value="{{g.student.id}}">
+                    <div class="mb-3">
+                        <label for="" class="form-label">Choose Photo:</label>
+                        <input type="file" class="form-control photo-chooser" name="photo" required >
+                    </div>
+                    <div class="text-center">
+                        <button class="btn btn-sm btn-c-light-primary " type="submit">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

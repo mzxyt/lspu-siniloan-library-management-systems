@@ -1,0 +1,73 @@
+<!-- add modal -->
+<div class="modal fade modal-lg" id="account-modal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header border-0 ">
+                <h5 class="modal-title fw-bold">Account</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="{{url_for('admin.update_account')}}?next={{g.current_url}}" enctype="multipart/form-data" method="post">
+                <input type="hidden" name="id" id="admin-id" value="{{g.admin.id}}">
+                <div class="modal-body">
+                    <div class="user-photo mb-3 shadow" style="width: 150px;height:150px" id="admin-photo" data-img="{{g.admin.photo}}" ></div>
+
+                    <div class="mb-3">
+                        <label for="" class="form-label">Choose Photo:</label>
+                        <input type="file" name="photo" required class="form-control photo-chooser" data-preview="#admin-photo">
+                    </div>
+                    <div class="mb-3">
+                        <label for="" class="form-label">Name:</label>
+                        <input type="text" name="name" value="{{g.admin.name}}" required class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label for="" class="form-label">Email:</label>
+                        <input type="email" name="email" value="{{g.admin.email}}" required class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label for="" class="form-label">Username:</label>
+                        <input type="text" name="username" value="{{g.admin.username}}"required class="form-control">
+                    </div>
+                 
+                    
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-c-secondary btn-sm rounded-1" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-c-primary btn-sm rounded-1">Save changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- password modal -->
+<div class="modal fade " id="password-modal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header border-0 ">
+                <h5 class="modal-title fw-bold">Change Password</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="{{url_for('admin.change_password')}}?next={{g.current_url}}" id="password-form" method="post">
+            <input type="hidden" name="id" value="{{g.admin.id}}">
+                <div class="modal-body">
+            
+                    <div class="mb-3">
+                        <label for="" class="form-label">Current Password:</label>
+                        <input type="text" id="current-password" required class="form-control">
+                        <span class="d-none text-danger" id="password-label">Incorrect password</span>
+                    </div>
+                    <div class="mb-3">
+                        <label for="" class="form-label">New Password:</label>
+                        <input type="text" name="password" required class="form-control">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-c-secondary btn-sm rounded-1" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-c-primary btn-sm rounded-1">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

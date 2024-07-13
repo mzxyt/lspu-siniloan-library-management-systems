@@ -1,0 +1,105 @@
+body {
+  padding: 0;
+  margin: 0;
+}
+
+#navbar {
+  height: 80px;
+}
+#navbar .logo {
+  width: 3.6rem;
+  height: 3.6rem;
+}
+
+main.auth {
+  background: url("../images/library-bg.webp");
+  min-height: 100vh;
+  width: 100%;
+  max-width: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+main #sidebar {
+  position: fixed;
+  left: 0;
+  top: 80px;
+  height: 100vh;
+  width: 210px;
+  background: #fff;
+  overflow-y: auto;
+}
+main #sidebar .nav-link {
+  padding: 13px 15px;
+  display: flex;
+  align-items: center;
+}
+main #sidebar .nav-link.active {
+  background: rgba(11, 23, 127, 0.1) !important;
+  border-left: 3px solid #0B177F;
+  color: #0B177F !important;
+}
+main .main-content {
+  margin-left: 210px;
+  padding: 20px 8px;
+}
+
+.auth-profile-pic {
+  width: 120px;
+  height: 120px;
+  margin: auto;
+  border-radius: 50%;
+  box-sizing: border-box;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
+}
+
+.user-photo {
+  width: 100px;
+  height: 100px;
+  margin: 13px auto;
+  border-radius: 50%;
+  box-sizing: border-box;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  background-size: cover !important;
+}
+.user-photo.sm {
+  width: 70px !important;
+  height: 70px !important;
+}
+
+.dashboard-card {
+  border-top: none;
+  border-bottom: none;
+  border-right: none;
+  border-left-width: 3px !important;
+  border-left-style: solid !important;
+}
+
+.c-border {
+  border-top: none;
+  border-bottom: none;
+  border-right: none;
+  border-left-width: 3px !important;
+  border-left-style: solid !important;
+}
+
+@media screen and (max-width: 768px) {
+  #sidebar {
+    z-index: 1;
+    background: white !important;
+    left: -210px !important;
+    transition: 200ms !important;
+    overflow-y: scroll;
+    padding-bottom: 150px;
+  }
+  #sidebar.open {
+    left: 0 !important;
+  }
+  main .main-content {
+    margin-left: 0;
+  }
+}/*# sourceMappingURL=admin.css.map */

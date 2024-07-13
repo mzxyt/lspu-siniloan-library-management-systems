@@ -1,0 +1,50 @@
+<aside id="sidebar" class="shadow">
+    <div class="header">
+        <div class="user-photo shadow border-light border border-2" data-img="{{g.admin.photo}}"></div>
+        <p class="text-center fs-6  text-secondary text-capitalize">
+            {{g.admin.name}}
+        </p>
+    </div>
+    <hr>
+    <ul class="nav flex-column">
+        <li class="nav-item ps-2 mb-2 text-black-50">
+            <small>Manage</small>
+        </li>
+        <li class="nav-item mb-3">
+            <a href="{{url_for('admin.dashboard')}}" class="nav-link link-dark fw-bold">
+                <i class="bx bxs-dashboard me-2"></i>
+                <span>Dashboard</span>
+            </a>
+        </li>
+        <li class="nav-item mb-3">
+            <a href="{{url_for('admin.students')}}" class="nav-link link-dark fw-bold ">
+                <i class="bx bxs-user me-2"></i>
+                <span>Students</span>
+            </a>
+        </li>
+        <li class="nav-item mb-3">
+            <a href="{{url_for('admin.categories')}}" class="nav-link link-dark fw-bold ">
+                <i class="bx bxs-category me-2"></i>
+                <span>Categories</span>
+            </a>
+        </li>
+        <li class="nav-item mb-3">
+            <a href="{{url_for('admin.authors')}}" class="nav-link link-dark fw-bold ">
+                <i class="bx bxs-pen me-2"></i>
+                <span>Authors</span>
+            </a>
+        </li>
+        <li class="nav-item mb-3">
+            <a href="{{url_for('admin.books')}}" class="nav-link link-dark fw-bold ">
+                <i class="bx bxs-book me-2"></i>
+                <span>Books</span>
+            </a>
+        </li>
+        <li class="nav-item mb-3">
+            <a href="{{url_for('admin.rentals')}}" class="nav-link link-dark fw-bold ">
+                <i class="bx bxs-book me-2"></i>
+                <span>Book Requests</span>
+            </a>
+        </li>
+    </ul>
+</aside>

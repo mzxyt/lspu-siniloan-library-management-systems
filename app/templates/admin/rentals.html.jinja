@@ -1,0 +1,220 @@
+{%extends 'admin/base.html.jinja'%}
+{%block title%} Requests {%endblock%}
+
+{%block content%}
+<div class="container">
+    <h3>Requests</h3>
+    <hr>
+    <div class="">
+        {% for message in get_flashed_messages(category_filter=["message"]) %}
+        <div class="text-start flash alert alert-success mb-3"><i class="bx bxs-check-circle me-1"></i> {{ message }}
+        </div>
+        {% endfor %}
+        {% for message in get_flashed_messages(category_filter=["error"]) %}
+        <div class="text-start flash alert alert-danger mb-3"><i class="bx bx-info-circle me-1"></i> {{ message }}</div>
+        {% endfor %}
+    </div>
+    <ul class="nav-c-tabs" data-active="{{tab}}">
+        <li class="nav-item">
+            <a href="{{url_for('admin.rentals')}}?tab=pending" class="nav-link" data-key="pending">Pending</a>
+        </li>
+        <li class="nav-item">
+            <a href="{{url_for('admin.rentals')}}?tab=approved" class="nav-link" data-key="approved">Approved</a>
+        </li>
+       
+        <li class="nav-item">
+            <a href="{{url_for('admin.rentals')}}?tab=completed" class="nav-link" data-key="completed">Completed</a>
+        </li>
+    </ul>
+    <div class="my-3 alert alert-info py-2 text-capitalize">
+        <small class="fw-bold"><i class="bx bx-info-circle"></i> Showing {{tab}} Requests</small>
+    </div>
+    <div class="table-responsive-sm">
+        <table class="table" id="table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Student</th>
+                    <th>Date Requested</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {%for i in range(0,len)%}
+                <tr>
+                    <td>{{rentals[i].rental_no}}</td>
+                    <td>
+                        {{rentals[i].firstname}} {{rentals[i].middlename}} {{rentals[i].lastname}}
+                    </td>
+                    <td>
+                        {{rentals[i].date}}
+                    </td>
+                    <td class="fw-bold">
+                        {%if rentals[i].status == 0 %}
+                        Pending
+                        {%elif rentals[i].status == 1%}
+                        Approved
+                        {%elif rentals[i].status == 2%}
+                        Not yet Returned
+                        {%else%}
+                        Returned
+                        {%endif%}
+
+                    </td>
+                    <td>
+
+                        {%if rentals[i].status == 0 %}
+                        <button class="btn btn-sm btn-c-light-primary me-2" data-id="{{rentals[i].rental_id}}"
+                            data-bs-toggle="modal" data-bs-target="#info-modal" type="button">
+                            <i class="bx bx-info-circle"></i>
+                        </button>
+                        <a href="{{url_for('admin.update_request_status')}}?id={{rentals[i].rental_id}}&status=1"
+                            class="btn btn-sm btn-outline-success  update-status">
+                            <i class="bx bx-like"></i>
+                            Approve
+                        </a>
+                        <button class="btn btn-sm btn-outline-danger decline" type="button"><i
+                                class="bx bx-dislike update-status"></i> Decline</button>
+                        {%elif rentals[i].status == 1%}
+                        <button class="btn btn-sm btn-c-light-primary me-2" data-id="{{rentals[i].rental_id}}"
+                            data-bs-toggle="modal" data-bs-target="#info-modal" type="button">
+                            <i class="bx bx-info-circle"></i>
+                            Details
+                        </button>
+                        <a href="{{url_for('admin.update_request_status')}}?id={{rentals[i].rental_id}}&status=3"
+                            class="btn btn-sm btn-success  update-status">
+                            <i class="bx bx-minus"></i>
+                            Mark as Returned
+                        </a>
+                        {%elif rentals[i].status == 2%}
+                        <button class="btn btn-sm btn-c-light-primary me-2" data-id="{{rentals[i].rental_id}}"
+                            data-bs-toggle="modal" data-bs-target="#info-modal" type="button">
+                            <i class="bx bx-info-circle"></i>
+                            Details
+                        </button>
+                        <a href="{{url_for('admin.update_request_status')}}?id={{rentals[i].rental_id}}&status=3"
+                            class="btn btn-sm btn-success  update-status">
+                            <i class="bx bx-check-circle"></i>
+                            Mark as Returned
+                        </a>
+
+                        {%else%}
+                        {# Returned #}
+                        {%endif%}
+                    </td>
+                </tr>
+                {%endfor%}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{%include 'admin/components/rentals-modal.html.jinja'%}
+{%endblock%}
+
+{%block scripts%}
+<script>
+
+    $(function () {
+        $("#table").dataTable()
+    })
+
+    $('#lastname-box').on('change, keydown, keyup', function (e) {
+        $("#password-box").val($(this).val())
+    })
+    $('#edit-lastname-box').on('change', function (e) {
+        $("#edit-password-box").val($(this).val())
+    })
+
+    $("#edit-modal").on('show.bs.modal', function (e) {
+        let id = $(e.relatedTarget).data('id')
+
+        $.ajax({
+            url: "{{url_for('admin.get_student')}}",
+            method: "post",
+            data: { id },
+            dataType: 'json',
+            success: function (res) {
+                console.log('res: ', res)
+
+                $("#edit-firstname-box").val(res.firstname)
+                $("#edit-middlename-box").val(res.middlename)
+                $("#edit-lastname-box").val(res.lastname)
+                $("#edit-gender").val(res.gender).html(res.gender)
+                $("#edit-year-level-box").val(res.year_level)
+                $("#edit-student-id-box").val(res.student_id)
+                $('#id-box').val(res.id)
+
+            },
+            error: function (err) {
+                console.log('error: ', err)
+            }
+        })
+    })
+
+    $(".delete").on('click', function (e) {
+        const id = $(this).data('id')
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = `{{url_for('admin.delete_student')}}?id=${id}`
+            }
+        })
+    })
+
+    $("#info-modal").on('show.bs.modal', function (e) {
+        let id = $(e.relatedTarget).data('id')
+        const months = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"]
+
+        $.ajax({
+            url: "{{url_for('api.get_request')}}",
+            method: "POST",
+            data: { id },
+            dataType: 'JSON',
+            success: function (res) {
+                console.log('res: ', res)
+                let date = new Date(res.date)
+                $("#status").html(status)
+                $("#student").html(res.firstname + " " + res.lastname)
+                $("#year_level").html(res.year_level)
+                $("#request_id").html(res.rental_no)
+                $("#no_of_books").html(res.details.length)
+                $("#date_requested").html(`${months[date.getMonth()]}. ${date.getDate() < 10 ? '0' + date.getDate() : date.getDate()}, ${date.getFullYear()}`)
+                $("#content").removeClass("d-none")
+
+                $("#info-list").html("")
+                if (res.details.length <= 1) {
+                    $("#info-list").addClass("single")
+                } else {
+                    $("#info-list").removeClass("single")
+                }
+                for (let details of res.details) {
+                    let item = `
+                             <li>
+                                <p class="my-1 fw-bold">${details.title}</p>
+                                <p class="my-1">
+                                    <small>Category: ${details.category_name}</small>
+                                </p>
+
+                            </li>
+                    `
+                    $("#info-list").append(item)
+                }
+
+                $("#info-placeholders").addClass("d-none")
+            }
+        })
+
+
+
+    })
+</script>
+{%endblock%}

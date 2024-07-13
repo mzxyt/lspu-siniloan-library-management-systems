@@ -1,0 +1,27 @@
+<div class="offcanvas offcanvas-end" data-bs-scroll="true" tabindex="-1" id="cart-offcanvas"
+    aria-labelledby="offcanvasExampleLabel">
+    <div class="offcanvas-header border-bottom shadow-sm">
+        <h5 class="offcanvas-title fw-bold text-secondary" id="offcanvasExampleLabel">Selected Books</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body position-relative">
+        <p class="fw-bold text-secondary"><small>Review</small></p>
+        <div class="mt-2" id="borrow-list">
+            <p class="text-center text-black-50">Nothing Here</p>
+
+        </div>
+
+        <div id="borrow-loader" class="text-center">
+            <div class="spinner-border spinner-border-sm text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+        <div class="position-absolute bottom-0 start-0 w-100 mb-2 px-2">
+            <div class="d-grid">
+                <a href="{{url_for('students.borrow_book')}}" class="btn btn-primary" id="borrow-all" type="button">
+                    <small><i class="bx bx-download me-1"></i> Borrow all</small>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

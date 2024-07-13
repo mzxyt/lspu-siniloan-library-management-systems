@@ -1,0 +1,152 @@
+{%extends 'students/base.html.jinja'%}
+
+{%block title %} Borrow books {%endblock%}
+
+{%block content %}
+<section class=" pb-5">
+    <div class="container mt-5 ">
+        <div class="row">
+            <div class="col-md-9">
+                {% for message in get_flashed_messages(category_filter=["error"]) %}
+                <div class="text-start flash alert alert-danger mb-3"><i class="bx bxs-x-circle me-1"></i> 
+                {{ message }}
+                </div>
+                {% endfor %}
+                <div class="d-flex align-items-center mb-3">
+                    <div>
+                        <a href="/search" class="btn btn-sm btn-dark">
+                            <i class="bx bx-arrow-back"></i>
+                        </a>
+                    </div>
+                    <div class="ms-auto me-auto">
+                        <p class="text-black-50 fs-6 fw-bold my-0">
+                            <small>
+                                <i class="bx bx-info-circle "></i>
+                                Please review form before proceeding
+                            </small>
+                        </p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body text-secondary">
+                        <form action="{{url_for('students.checkout')}}" method="POST">
+                            <p class="text-secondary mb-3"><small>Request Form</small></p>
+                            <input type="hidden" name="student_id" value="{{g.student.id}}">
+                            <div class="mb-2">
+                                <label for="" class="form-label">Name of student:</label>
+                                <input type="text" readonly disabled class="form-control form-control-sm"
+                                    value="{{g.student.firstname}} {{g.student.lastname}}">
+                            </div>
+                            <div class="mb-3">
+                                <label for="" class="form-label">Year Level:</label>
+                                <input type="text" readonly disabled class="form-control form-control-sm"
+                                    value="{{g.student.year_level}}">
+                            </div>
+                            <p class="mb-1">Books to borrow:</p>
+                            {% if books_count > 0 %}
+                            {%for book in books%}
+                            <input type="hidden" name="book_id[]" value="{{book.id}}">
+                            <div class="card rounded-1 mb-2">
+                                <div class="card-body p-lg-3">
+                                    <h6 class="text-primary-50 fw-bold text-capitalize">{{book.title}}</h6>
+                                    <div class="mt-1">
+                                        <div class="row">
+                                            <div class="col-sm-auto">
+                                                <p class="text-black-50 fw-bold text-capitalize mb-0">
+                                                    <small>Category:</small>
+                                                    <a href="#"
+                                                        class="ms-1 text-primary-50"><small>{{book.category_name}}</small></a>
+                                                </p>
+                                            </div>
+                                            <div class="col-sm">
+                                                <p class="text-black-50 fw-bold text-capitalize mb-0">
+                                                    <small>Date Published: {{book.date}}</small>
+                                                </p>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            {%endfor%}
+                            {% else %}
+                            <div class="text-center">
+                                <p class="mt-5 text-secondary">Nothing to display.</p>
+                            </div>
+                            {%endif%}
+                            <hr>
+                            <div class="mt-3">
+                                <button class="btn btn-c-primary rounded-1 btn-sm" type="submit">Submit request</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+{% include "students/components/cart.html.jinja" %}
+{% include "students/components/search-modals.html.jinja" %}
+
+{%endblock%}
+
+{%block scripts %}
+<script>
+    $(function () {
+        let categoryId = $("#category-nav").data('active');
+        $("#category-nav .nav-link").filter((i, link) => $(link).data("category") === categoryId).addClass('active')
+    })
+
+    $("#info-modal").on("show.bs.modal", function (e) {
+        let id = $(e.relatedTarget).data('id')
+
+        $.ajax({
+            url: "{{url_for('api.get_books')}}",
+            method: 'post',
+            data: { id },
+            dataType: 'json',
+            success: function (res) {
+                console.log('res: ', res)
+                $("#title").html(res.title)
+                $("#category").html(res.category_name)
+                $("#author").html(res.author_name)
+                $("#date_published").html(res.date_published)
+                $("#author").html(res.author)
+                $("#description").html(res.sypnosis)
+                $("#info-placeholders").addClass('d-none')
+                $("#content").removeClass('d-none')
+
+                $("#borrow-btn").attr('href', `{{url_for("students.borrow_book")}}?id=${res.id}`)
+            }
+        })
+
+    })
+
+    $("#cart-offcanvas").on('show.bs.offcanvas', function (e) {
+        $(".modal").modal('hide')
+    })
+
+    //loads selected books
+    const loadBooks = () => {
+        $.ajax({
+            url: "{{url_for('students.get_selected_books')}}",
+            method: "POST",
+            dataType: 'json',
+            success: function (res) {
+                console.log('res: ', res)
+            },
+            error: function (err) {
+                console.log('error: ', err)
+            }
+        })
+    }
+
+    $(function () {
+        loadBooks()
+    })
+
+</script>
+{%endblock%}

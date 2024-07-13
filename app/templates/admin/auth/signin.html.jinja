@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Sign In</title>
+    <link rel="shortcut icon" href="{{url_for('static',filename='images/lspu_seal-6 1.png')}}" type="image/x-icon">
+    <link rel="stylesheet" href="{{url_for('static',filename='css/custom.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename='css/admin.css')}}">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+</head>
+
+<body class="bg-light">
+    <main class=" pt-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="row justify-content-center mb-5">
+                        <div class="col-md-11 text-center">
+                            <img src="{{url_for('static',filename='images/image.png')}}" class="img-fluid" alt="">
+                        </div>
+                    </div>
+                    <h2 class="mt-4 mb-3 fw-bold text-center">ADMIN - SIGN IN</h2>
+                    <p class="fs-5 text-secondary mb-5 text-center">Sign in to manage system.</p>
+                    <div class="container">
+                        {% for message in get_flashed_messages(category_filter=["error"]) %}
+                        <div class="text-start flash alert alert-danger mb-3"><i class="bx bxs-info-circle"></i>
+                            {{ message }}</div>
+                        {% endfor %}
+                        {% for message in get_flashed_messages(category_filter=["message"]) %}
+                        <div class="text-start flash alert alert-success mb-3"><i class="bx bxs-check-circle"></i> {{
+                            message }}</div>
+                        {% endfor %}
+                    </div>
+                    <form action="{{url_for('admin_auth.signin')}}" method="post">
+                        <div class="container">
+                            <div class="mb-3 text-start">
+                                <div class="input-group mb-3 rounded-">
+                                    <span class="input-group-text bg- text-dark " id="basic-addon1">
+                                        <i class="bx bxs-user"></i>
+                                    </span>
+                                    <input type="text" name="username" required placeholder="Username"
+                                        class="form-control form-control-lg ">
+                                </div>
+                            </div>
+                            <div class="mb-3 text-start">
+                                <!-- <label for="" class="form-label">Password</label> -->
+                                <div class="input-group mb-3 rounded-">
+                                    <span class="input-group-text bg- text-dark " id="basic-addon1">
+                                        <i class="bx bxs-lock"></i>
+                                    </span>
+
+                                    <input type="password" name="password" required placeholder="Password"
+                                        class="form-control form-control-lg rounded-0">
+                                </div>
+
+                            </div>
+                            <div class="text-center">
+                                <button class="btn px-4 px-lg-4 mt-3 btn-primary shadow  text-uppercase "
+                                    type="submit">signin</button>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+{% block scripts %}
+    <script>
+        document.addEventListener('contextmenu', function (e) {
+            alert("Sorry, right click is disabled to prevent leakage of confidential functions");
+            e.preventDefault();
+        });
+    </script>
+
+<script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-analytics.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyC-wgOaVsTWvyHKp1criJvRwv-Qs7000AI",
+    authDomain: "lspu-library.firebaseapp.com",
+    databaseURL: "https://lspu-library-default-rtdb.firebaseio.com",
+    projectId: "lspu-library",
+    storageBucket: "lspu-library.appspot.com",
+    messagingSenderId: "1017805405120",
+    appId: "1:1017805405120:web:412d94bb40663503772625",
+    measurementId: "G-R40HQ66G76"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+</script>
+{% endblock %}
+
+</body>
+
+</html>

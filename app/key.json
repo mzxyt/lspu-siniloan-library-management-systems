@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "lspu-siniloan-library",
+  "private_key_id": "71f317b8b16fcd6b1d3a77184c880d8964f6847c",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCgrlIRvTi7nUIE\nWRrTx7NCJKMxfOaXdVH3HWMMPB4V+tgDxNrTn9zB8vt3+iXwmBYz+iG6hMFaHKy5\nNNiggGPh3mBz9PK9pUoVnf1aTJoBZoL6SN8oYdwb6N36MX5QzAGi0mTVQidoBVmT\ndHpB58U5INczF9tMrGaa9e0opCqt9VfJYl3EvnhFrPP1ZE6oVRBqcHQCEjgeq7Rj\nL5aFnFFwCfj1Dv7She+1CVf/xDfY44EM/unBCk5/GV78WU+AbHC/EBpscYgomYWN\n7yXwU5IGt1nfUyh6KBMBuZ6CvPNUubPDPNJovz97tZDarhRCZWZNQQytEGPgsY2W\no6Z015kVAgMBAAECggEAG2tT3uoS1dUykEpiTRRtbxKQdJ/zO5JOH+S4Y7yYh7is\nBwyfKPDFO6WKqwEZW1Kgq1L6UXlZA1cUVHCDrPPr133aqL76c0lS+JhixPeAak/D\ndxFbX2k/pdWZl5m9i+0cNFxBz7B/x/ztub9tI3T5D1Qe1P2zswRSaAwiYcaN7+xB\n9uKrdqo0hXoOw8d/z1giulseyOhKyyhlQRlblyJRM3heVwUZQgxR9Ti2ok1KQ+aJ\npzmzDaF/cSqm71s5GUKLve4NuXjt0818+TL3aoNuKygYdCUlth2tPXJJdJYm0YeV\n98S8PIV2NcjVralyKjBgoOUWE0K2aLf3Qu8LTAxbwQKBgQDfsS3o8kkfkjgilu5g\nXqRkXIZX1Z/TLX0DEgXufcaMgLI3GUB6tkvua2e93ECaCr6SGmg7HGM7+PdRLc8h\nYuyF41MR/21a8a6b6QoO6nSY63n3zi/9Iw5nk6ah/lO+RXDigtU3aMNbq5SdW261\nxFRM79PuLb/Q5PX7omaquXKAoQKBgQC341u3tocVKEct66U+gzF3RKlWTelagUma\nVbFKt1dnbjyaAhfUQl9XA1FrMHAQ60cEQ7G+iIev875oXOT6UEeeBpVWLJBF9zdx\nJG7GnoWxzKNQRnWXVVQrqWsJ0dkrLZsHrY4ehmUCykdxaIl1mQIk4l8ZYn0R8vfm\nQ28Bi08f9QKBgQCxPBsaFM4nO51Kmreol5Q9CKpQ8au+kK4aPq+AdRtZu6Z4zYMv\nNz0WXPdHkTmGU7kG3fFz1Fwz6mFaaqdQ1qZ8ts7c1br5ccBdO9mCU/WqK/jphO60\n7I+/NVezxmTnvvFgJzV0v4b6HQqVWxpu3m3Ev8j1UD5I7wCPLe+WmXTFwQKBgQCi\nE/8vOe5uM4Ypb13Cb5gV66rlqt5XK0VYhtcxZ8/eFkfL5rRiHe4yn3YP6C2efAGo\nPJJZwbT23PuiuN4J0uCM5HiT78tqH6/6RYZuAiMMx7Xad4AF1uvNYBI8IX4slJHk\nfpCZTxORFgFKcD1YLXi6UdxIX4qlW2Ysypr43XTsUQKBgG+FQJmcyB/iuA5UgKc7\ndKpSJHv0SL5r7Z2TnFSy6Zged2Dq1FMwaTD09bdoCre6gq89DLjHjNlAdyBjusSb\nug1UmwgLfhgAvmJ92mHp62gU4/XTYrjou9V2FR2BSn1+qQNc7dIBazO0Js32R+Qw\nP9PF1OHi934tu+zUWW/J9iwk\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-rhagb@lspu-siniloan-library.iam.gserviceaccount.com",
+  "client_id": "118052899947285447505",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-rhagb%40lspu-siniloan-library.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

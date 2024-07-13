@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{%block title%}{%endblock%} - LSPU</title>
+    <link rel="shortcut icon" href="{{url_for('static',filename='images/lspu_seal-6 1.png')}}" type="image/x-icon">
+    <link rel="stylesheet" href="{{url_for('static',filename='css/custom.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename='css/admin.css')}}">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.6.5/dist/sweetalert2.min.css">
+</head>
+
+<body class="">
+    <nav class="navbar navbar-dark bg-primary" id="navbar">
+        <div class="container-fluid">
+            <button id="sidebar-toggler"
+                class="btn btn-link text-light px-0 pt-1 pb-1 rounded-1 me-auto d-inline d-lg-none" type="button">
+                <i class="bx bx-menu fs-1"></i>
+            </button>
+            <a href="{{url_for('index')}}" class="navbar-brand">
+                <img src="{{url_for('static',filename='images/lspu_seal-6 1.png')}}" alt="logo"
+                    class="logo img-fluid me-1">
+                <span class="d-none d-lg-inline d-md-inline">LSPU Library E-Access</span>
+            </a>
+            <div class="dropdown">
+                <button class="btn btn-link text-decoration-none text-light dropdown-toggle" data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                    {{g.admin.name}}
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end">
+                    <li><a class="dropdown-item" href="#account-modal" data-bs-toggle="modal">Update Account</a></li>
+                    <li><a class="dropdown-item" href="#password-modal" data-bs-toggle="modal">Change Password</a></li>
+                    <li><a class="dropdown-item" href="{{url_for('admin_auth.sign_out')}}">Sign Out</a></li>
+                </ul>
+            </div>
+
+        </div>
+    </nav>
+
+    <main>
+        {% include 'admin/components/sidebar.html.jinja'%}
+        <div class="main-content">
+
+            {%block content%} {%endblock%}
+        </div>
+    </main>
+    {% include "admin/components/account.html.jinja" %}
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <!-- JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.6.5/dist/sweetalert2.min.js"></script>
+    <script>
+        $(function () {
+            document.addEventListener('contextmenu', function (e) {
+                alert("Sorry, right click is disabled to prevent leakage of confidential functions");
+                e.preventDefault();
+            });
+            $.each($(".user-photo"), (index, elem) => {
+                console.log('elem: ', $(elem))
+                let img = $(elem).data('img');
+                console.log('image: ', img)
+                $(elem).css('background-image', `url('/${img}')`)
+            })
+            const current_url = window.location.pathname
+            $('#sidebar .nav-link').filter((i, link) => $(link).attr('href') === current_url)
+                .addClass('active')
+
+
+            $.each($(".nav-c-tabs"), (index, elem) => {
+                let list = $(elem)
+                console.log('lsist: ', list)
+                let activeKey = list.data('active')
+                list.find(".nav-link").filter((i, link) => $(link).data("key") === activeKey).addClass('active')
+            })
+
+            $("#sidebar-toggler").on("click", function (e) {
+                $("#sidebar").toggleClass("open")
+            })
+
+            $(".photo-chooser").on('change', function (e) {
+                let files = e.target.files
+                let preview = $($(this).data('preview'))
+
+                preview.css('background-image', `url(${URL.createObjectURL(files[0])})`)
+
+            })
+
+            var verified_password = false
+            $("#password-form").on("submit", function (e) {
+                if (!verified_password) {
+                    e.preventDefault()
+
+                    let password = $("#current-password").val()
+                    let id = $("#admin-id").val()
+                    $.ajax({
+                        url: "{{url_for('api.check_admin_password')}}",
+                        method: 'post',
+                        data: { id, password },
+                        dataType: "json",
+                        success: function (res) {
+                            if (res.matched) {
+                                verified_password = true
+                                $("#password-form").submit()
+                            } else {
+                                $("#password-label").removeClass("d-none")
+                            }
+                        }
+                    })
+
+                }
+            })
+        })
+    </script>
+    {%block scripts%} {%endblock%}
+</body>
+
+</html>

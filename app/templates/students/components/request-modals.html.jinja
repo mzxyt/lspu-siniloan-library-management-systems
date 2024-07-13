@@ -1,0 +1,106 @@
+<!-- edit modal -->
+<div class="modal fade modal-lg bg-primary bg-opacity-10" id="info-modal" tabindex="-1">
+    <div class="modal-dialog ">
+        <div class="modal-content p-4 rounded-3">
+
+            <div class="modal-body">
+                <div id="content" class="d-none">
+                    <h6 class="modal-title text-secondary placeholder-glow mb-3">
+                        <span id="title">Request Details</span>
+                    </h6>
+                    <input type="hidden" id="info-id" value="">
+                    <div class="mt-1">
+                        <p class="text-dark fw-bold text-capitalize">
+                            Status:
+                            <span class=" ms-2" id="status">Status</span>
+                        </p>
+                        <p class="text-dark fw-bold text-capitalize">
+                            Request ID:
+                            <span class=" ms-2" id="request_id">Status</span>
+                        </p>
+                        <p class="text-dark fw-bold text-capitalize">
+                            Date requested:
+                            <span class=" ms-2" id="date_requested">Status</span>
+                        </p>
+                        <p class="text-dark fw-bold text-">
+                            No of books:
+                            <span class=" ms-2" id="no_of_books">Status</span>
+                        </p>
+
+
+                        <div class="mt-5">
+                            <div class="d-flex align-content-end">
+
+                                <div>
+                                    {# actions buttons here #}
+                                    <a href="#" id="cancel" 
+                                        class="btn btn-c-danger me-2 d-none btn-sm px-2 px-lg-3 rounded-pill fs-6 text-center action-btn">
+                                        <small class="d-flex align-items-center">
+                                            <span>Cancel Request</span>
+                                            <i class='bx bx-x-circle ms-1'></i>
+                                        </small>
+                                    </a>
+                                    <a href="#" id="remove" 
+                                        class="btn btn-c-danger me-2 d-none btn-sm px-2 px-lg-3 rounded-pill fs-6 text-center action-btn">
+                                        <small class="d-flex align-items-center">
+                                            <span>Remove Request</span>
+                                            <i class='bx bx-trash ms-1'></i>
+                                        </small>
+                                    </a>
+                                </div>
+                                <div class="text-end ms-auto">
+                                    <button type="button"
+                                        class="btn rounded-pill btn-sm px-2 px-lg-3  btn-light border my-0"
+                                        data-bs-dismiss="modal">Close</button>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                {# placeholder #}
+                <div id="info-placeholders">
+                    <h4 class="modal-title fw-bold placeholder-glow mb-3">
+                        <span class="placeholder placeholder-lg col-10"></span>
+                        {# <span id="title">Introduction to programming</span> #}
+                    </h4>
+                    <div class="mt-1">
+                        <p class="text-secondary placeholder-glow mb-3">
+                            <span class="placeholder col-4"></span>
+                        </p>
+                        <p class="text-secondary placeholder-glow mb-3">
+                            <span class="placeholder col-4"></span>
+                        </p>
+                        <p class="text-secondary placeholder-glow mb-3">
+                            <span class="placeholder col-4"></span>
+                        </p>
+                        <p class="text-secondary placeholder-glow mb-3">
+                            <span class="placeholder col-4"></span>
+                        </p>
+                        <div class="mt-2">
+                            <p class="text-secondary placeholder-glow">
+                                <span class="placeholder col-2"></span>
+                            </p>
+                            <p class="text-secondary placeholder-glow">
+                                <span class="placeholder col-8"></span>
+                                <span class="placeholder col-9"></span>
+                                <span class="placeholder col-7"></span>
+                                <span class="placeholder col-8"></span>
+                                <span class="placeholder col-9"></span>
+                                <span class="placeholder col-9"></span>
+                            </p>
+                        </div>
+
+                        <div class="mt-5">
+                            <p class="placeholder-glow">
+                                <span class="placeholder me-2 placeholder-lg col-2"></span>
+                                <span class="placeholder placeholder-lg col-2"></span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,109 @@
+<!-- edit modal -->
+<div class="modal fade modal-lg bg-primary bg-opacity-10" id="info-modal" tabindex="-1">
+    <div class="modal-dialog ">
+        <div class="modal-content p-4 rounded-3">
+
+            <div class="modal-body">
+                <div id="content" class="d-none">
+                    <h3 class="modal-title text-capitalize fw-bold placeholder-glow mb-3">
+                        <span id="title">Introduction to programming</span>
+                    </h3>
+                    <div class="mt-1">
+                        <p class="text-secondary text-capitalize">Category: <a href="#" class="link-primary ms-2"
+                                id="category">Programming</a></p>
+                        <p class="text-secondary text-capitalize">Date Published: <span class=" ms-2"
+                                id="date_published">March 12, 2000</span></p>
+                        <p class="text-secondary text-capitalize">Written by: <span class=" ms-2" id="author">Juan Dela
+                                Cruz</span></p>
+                        <div class="mt-2">
+                            <p class="text-secondary">Description:</p>
+                            <p class="text-secondary" id="description">
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                                incididunt ut
+                                labore et dolore magna aliqua. Congue quisque egestas diam in arcu cursus euismod.
+                                Mattis
+                                enim ut tellus elementum. Ac ut consequat semper viverra nam libero. Lacus vestibulum
+                                sed
+                                arcu non odio euismod lacinia at. Ultrices gravida dictum fusce ut placerat orci nulla.
+                                Sociis natoque penatibus et magnis dis parturient montes nascetur ridiculus.
+                                Pellentesque
+                                habitant morbi tristique senectus et netus et malesuada fames. Viverra vitae congue eu
+                                consequat. Urna cursus eget nunc scelerisque. Integer quis auctor elit sed vulputate mi
+                                sit.
+                            </p>
+                        </div>
+
+                        <div class="mt-5">
+                            <div class="d-flex align-content-end">
+                                <div>
+                                    <form action="#" id="select-book-form" method="post">
+                                        <input type="hidden" name="id" id="book-id" >
+                                        <button type="submit" id="info-btn-select"
+                                            class="btn btn-c-primary me-2 px-2 px-lg-3 rounded-pill fs-6 text-center">
+                                            <small class=" d-flex align-items-center">
+                                                <span>Select this Book</span>
+                                                <i class='bx bx-plus-circle ms-1'></i>
+                                            </small>
+                                        </button>
+                                        <button type="button" id="info-btn-remove"
+                                            class="btn btn-c-danger me-2 d-none px-2 px-lg-3 rounded-pill fs-6 text-center">
+                                            <small class=" d-flex align-items-center">
+                                                <span>Remove from selection</span>
+                                                <i class='bx bx-x-circle ms-1'></i>
+                                            </small>
+                                        </button>
+                                    </form>
+                                </div>
+                                <div class="text-end ms-auto">
+                                    <button type="button" class="btn btn-light border my-0"
+                                        data-bs-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {# placeholder #}
+                <div id="info-placeholders">
+                    <h4 class="modal-title fw-bold placeholder-glow mb-3">
+                        <span class="placeholder placeholder-lg col-10"></span>
+                        {# <span id="title">Introduction to programming</span> #}
+                    </h4>
+                    <div class="mt-1">
+                        <p class="text-secondary placeholder-glow mb-3">
+                            <span class="placeholder col-4"></span>
+                        </p>
+                        <p class="text-secondary placeholder-glow mb-3">
+                            <span class="placeholder col-4"></span>
+                        </p>
+                        <p class="text-secondary placeholder-glow mb-3">
+                            <span class="placeholder col-4"></span>
+                        </p>
+                        <p class="text-secondary placeholder-glow mb-3">
+                            <span class="placeholder col-4"></span>
+                        </p>
+                        <div class="mt-2">
+                            <p class="text-secondary placeholder-glow">
+                                <span class="placeholder col-2"></span>
+                            </p>
+                            <p class="text-secondary placeholder-glow">
+                                <span class="placeholder col-8"></span>
+                                <span class="placeholder col-9"></span>
+                                <span class="placeholder col-7"></span>
+                                <span class="placeholder col-8"></span>
+                                <span class="placeholder col-9"></span>
+                                <span class="placeholder col-9"></span>
+                            </p>
+                        </div>
+
+                        <div class="mt-5">
+                            <p class="placeholder-glow">
+                                <span class="placeholder me-2 placeholder-lg col-2"></span>
+                                <span class="placeholder placeholder-lg col-2"></span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

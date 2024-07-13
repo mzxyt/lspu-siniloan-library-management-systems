@@ -1,0 +1,122 @@
+@import './colors';
+
+$primary: $blue;
+$success: $green;
+$danger:$red;
+
+@import '../bootstrap/scss/bootstrap.scss';
+
+@font-face {
+    font-family: 'custom';
+    src: url('../CharlieDisplay-Light.otf');
+}
+
+*{
+    font-family: 'custom' !important;
+}
+
+.btn-success{
+    color: white !important;
+}
+.btn-outline-success{
+    &:hover{
+        color: white !important;
+    }
+}
+.btn-danger{
+    color: white !important;
+}
+
+.text-primary-50{
+    color: rgba($color: $blue, $alpha: 0.7);
+}
+
+@each $color,
+$value in $custom-color-map {
+    .btn-c-#{$color} {
+        background: rgba($color: $value, $alpha: 0.15) !important;
+        color: rgba($color: $value, $alpha: 1);
+        font-weight: bold !important;
+        border: 1px solid rgba($color: $value, $alpha: 0.12) !important;
+
+        &:hover {
+            background: rgba($color: $value, $alpha: 0.25) !important;
+            color: rgba($color: $value, $alpha: 1) !important;
+        }
+    }
+}
+@each $color,
+$value in $custom-color-map {
+    .btn-c-light-#{$color} {
+        background: rgba($color: $value, $alpha: 0.1) !important;
+        color: rgba($color: $value, $alpha: 1);
+        font-weight: bold !important;
+        border: 1px solid rgba($color: $value, $alpha: 0.3) !important;
+
+        &:hover {
+            background: rgba($color: $value, $alpha: 0.25) !important;
+            color: rgba($color: $value, $alpha: 1) !important;
+        }
+    }
+}
+
+.nav-c-list {
+    list-style: none;
+    li{
+        position: relative;
+        padding-left: 20px;
+     
+        &:after{
+            content: "";
+            width: 10px;
+            height: 10px;
+            position: absolute;
+            top: 6px;
+            left: -15px;
+            background: rgba($color: $blue, $alpha: 0.7) !important;
+        }
+    }
+    &:not(.single){
+        li{
+            &::before{
+                content:"";
+                position: absolute;
+                left: -10.5px;
+                border-left: 1px solid rgb(160, 160, 160);
+                height: 100%;
+                width: 1px;
+            }
+            &:first-child::before{
+                top: 15.5px;
+            }
+        }
+    }
+}
+
+
+.nav-c-tabs {
+    display: flex;
+    flex-direction: row !important;
+    list-style: none;
+    padding: 0;
+    padding-bottom: 20px;
+    overflow-x: auto;
+    width: 100%;
+    max-width: 100%;
+    li{
+        margin-right: 25px;
+    }
+    .nav-link {
+        width: max-content;
+        padding: 5px 10px !important;        
+        &.active {
+            border-bottom: 3px solid $blue;
+        }
+
+        &:not(.active) {
+            &:hover {
+                background: rgba($color: $blue, $alpha: 0.1);
+            }
+        }
+    }
+}

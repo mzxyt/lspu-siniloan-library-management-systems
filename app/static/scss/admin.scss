@@ -1,0 +1,126 @@
+@import './colors';
+$sidebar-lg: 210px;
+$navbar-h: 80px;
+
+body {
+    padding: 0;
+    margin: 0;
+}
+
+#navbar {
+    $logo-size: 3.6rem;
+    height: $navbar-h;
+
+    .logo {
+        width: $logo-size;
+        height: $logo-size;
+    }
+}
+
+main {
+    &.auth {
+        background: url('../images/library-bg.webp');
+        min-height: 100vh;
+        width: 100%;
+        max-width: 100%;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
+
+    #sidebar {
+        position: fixed;
+        left: 0;
+        top: $navbar-h;
+        height: 100vh;
+        width: $sidebar-lg;
+        background: #fff;
+        overflow-y: auto;
+
+        .nav-link {
+            padding: 13px 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-link.active {
+            background: rgba($blue, 0.1) !important;
+            border-left: 3px solid $blue;
+            color: $blue !important;
+        }
+    }
+
+    .main-content {
+        margin-left: $sidebar-lg;
+        padding: 20px 8px;
+    }
+
+   
+}
+
+
+.auth-profile-pic {
+    width: 120px;
+    height: 120px;
+    margin: auto;
+    border-radius: 50%;
+    box-sizing: border-box;
+
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+}
+
+.user-photo {
+    $size: 100px;
+    width: $size;
+    height: $size;
+    margin: 13px auto;
+    border-radius: 50%;
+    box-sizing: border-box;
+    // background-image: url('../images/avatar-380-456332-512.webp');
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+
+    &.sm{
+        width: 70px !important;
+        height: 70px !important;
+    }
+}
+
+.dashboard-card {
+    border-top: none;
+    border-bottom: none;
+    border-right: none;
+    border-left-width: 3px !important;
+    border-left-style: solid !important;
+}
+
+.c-border {
+    border-top: none;
+    border-bottom: none;
+    border-right: none;
+    border-left-width: 3px !important;
+    border-left-style: solid !important;
+}
+
+@media screen and (max-width:768px) {
+    #sidebar{
+        z-index: 1;
+        background: white !important;
+        left: -$sidebar-lg !important;
+        transition: 200ms !important;
+        overflow-y: scroll;
+        padding-bottom: 150px;
+        &.open{
+            left: 0 !important;
+        }
+    }
+    main{
+        .main-content{
+            margin-left: 0;
+        }
+    }
+}

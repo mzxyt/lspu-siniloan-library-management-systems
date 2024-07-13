@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Sign Up</title>
+    <link rel="shortcut icon" href="{{url_for('static',filename='images/lspu_seal-6 1.png')}}" type="image/x-icon">
+    <link rel="stylesheet" href="{{url_for('static',filename='css/custom.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename='css/admin.css')}}">
+</head>
+
+<body class="bg-white">
+    <main class="py-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-7">
+                    <div class="row justify-content-center mb-3">
+                        <div class="col-md-11 text-center">
+                            <img src="{{url_for('static',filename='images/image.png')}}" class="img-fluid" alt="">
+                        </div>
+                    </div>
+                    <h3 class="mt-1 mb-3 fw-bold text-center ">ADMIN - SIGNUP</h3>
+                    <p class="fs-5 text-secondary mb-2 text-center"><small>Create an account.</small></p>
+                    <div class="container">
+                        {% for message in get_flashed_messages(category_filter=["error"]) %}
+                        <div class="text-start py-2 flash alert alert-danger mb-3">{{ message }}</div>
+                        {% endfor %}
+                    </div>
+                    <form action="{{url_for('admin_auth.signup')}}" enctype="multipart/form-data" method="post">
+                        <div class="container">
+                            <div class="mb-3 text-center">
+                                <div id="auth-profile-pic" class="auth-profile-pic shadow"
+                                    data-img="{{url_for('static',filename='images/male.png')}}">
+                                </div>
+                            </div>
+                            <div class="mb-3 text-start">
+                                <label for="" class="form-label">Your Photo:</label>
+                                <input type="file" name="photo" required class="form-control photo-chooser">
+                            </div>
+                            <div class="mb-3 text-start">
+                                <label for="" class="form-label">Name:</label>
+                                <input type="text" name="name" required placeholder="Fullname" class="form-control">
+                            </div>
+                            <div class="mb-3 text-start">
+                                <label for="" class="form-label">Email Address:</label>
+                                <input type="email" name="email" required placeholder="Email" class="form-control">
+                            </div>
+                            <div class="mb-3 text-start">
+                                <label for="" class="form-label">Username:</label>
+                                <input type="text" name="username" required placeholder="Username" class="form-control">
+                            </div>
+                            <div class="mb-3 text-start">
+                                <label for="" class="form-label">Password:</label>
+                                <input type="password" name="password" required placeholder="Password"
+                                    class="form-control">
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <button class="btn px-lg-4 mt-3 btn-dark shadow text-uppercase " type="submit"><span
+                                    class="me-1">create</span> account</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.min.js"></script>
+    <script>
+        $(function () {
+            let img = $('#auth-profile-pic').data('img');
+            $('#auth-profile-pic').css('background-image', `url('${img}')`)
+
+            $(".photo-chooser").on('change', function (e) {
+                let files = e.target.files;
+                let previewEl = $("#auth-profile-pic")
+                let img = URL.createObjectURL(files[0])
+                previewEl.css('background-image', `url('${img}')`)
+            })
+
+            document.addEventListener('contextmenu', function (e) {
+                alert("Sorry, right click is disabled to prevent leakage of confidential functions");
+                e.preventDefault();
+            });
+        })
+    </script>
+</body>
+
+</html>
